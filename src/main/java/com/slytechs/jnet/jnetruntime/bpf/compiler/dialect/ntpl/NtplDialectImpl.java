@@ -40,7 +40,7 @@ public class NtplDialectImpl implements NtplDialect {
 	 */
 	@Override
 	public Lexer<NtplTokenType> createLexer(String source) throws CompilerException {
-		throw new UnsupportedOperationException("not implemented yet");
+		return new NtplLexer(source);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class NtplDialectImpl implements NtplDialect {
 	 */
 	@Override
 	public Parser<NtplTokenType, NtplASTNode> createParser(Lexer<NtplTokenType> lexer) throws CompilerException {
-		throw new UnsupportedOperationException("not implemented yet");
+		return new NtplParser(lexer);
 	}
 
 }

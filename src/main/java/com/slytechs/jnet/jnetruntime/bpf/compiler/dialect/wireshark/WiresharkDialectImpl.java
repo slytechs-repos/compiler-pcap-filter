@@ -40,7 +40,7 @@ public class WiresharkDialectImpl implements WiresharkDialect {
 	 */
 	@Override
 	public Lexer<WiresharkTokenType> createLexer(String source) throws CompilerException {
-		throw new UnsupportedOperationException("not implemented yet");
+		return new WiresharkLexer(source);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class WiresharkDialectImpl implements WiresharkDialect {
 	@Override
 	public Parser<WiresharkTokenType, WiresharkASTNode> createParser(Lexer<WiresharkTokenType> lexer)
 			throws CompilerException {
-		throw new UnsupportedOperationException("not implemented yet");
+		return new WiresharkParser(lexer);
 	}
 
 }

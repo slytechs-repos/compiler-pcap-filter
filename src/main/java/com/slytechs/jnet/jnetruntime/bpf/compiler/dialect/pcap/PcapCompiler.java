@@ -24,18 +24,19 @@ public class PcapCompiler extends AbstractBpfCompiler<PcapTokenType, PcapASTNode
 
 	@Override
 	protected Lexer<PcapTokenType> createLexer(String source) throws CompilerException {
-		return new PcapLexer(source);
+		return this.dialect.createLexer(source);
 	}
 
 	@Override
 	protected Parser<PcapTokenType, PcapASTNode> createParser(Lexer<PcapTokenType> lexer) throws CompilerException {
-		return new PcapParser(lexer);
+		return this.dialect.createParser(lexer);
 	}
 
 	@Override
 	protected BpfIR generateIR(PcapASTNode ast) throws CompilerException {
 		IRBuilder irBuilder = new IRBuilder();
 		emitInstructions(ast, irBuilder);
+
 		return irBuilder;
 	}
 
@@ -44,6 +45,7 @@ public class PcapCompiler extends AbstractBpfCompiler<PcapTokenType, PcapASTNode
 		try {
 			List<BpfInstruction> instructions = ir.getInstructions();
 			return new BpfProgram(instructions.toArray(new BpfInstruction[0]));
+
 		} catch (Exception e) {
 			throw new CodeGenerationException("Failed to generate BPF program", null, e);
 		}
@@ -52,23 +54,30 @@ public class PcapCompiler extends AbstractBpfCompiler<PcapTokenType, PcapASTNode
 	private void emitInstructions(PcapASTNode node, IRBuilder irBuilder) throws CompilerException {
 		if (node instanceof ProtocolNode protocolNode) {
 			generateProtocolInstructions(protocolNode, irBuilder);
+
 		} else if (node instanceof PortNode portNode) {
 			generatePortInstructions(portNode, irBuilder);
+
 		} else if (node instanceof HostNode hostNode) {
 			generateHostInstructions(hostNode, irBuilder);
+
 		} else if (node instanceof BinaryExpressionNode binaryNode) {
 			String operator = binaryNode.getOperator();
 			if (operator.equals("and") || operator.equals("&&")) {
 				generateAndOperatorInstructions(binaryNode, irBuilder);
+
 			} else if (operator.equals("or") || operator.equals("||")) {
 				generateOrOperatorInstructions(binaryNode, irBuilder);
+
 			} else {
 				throw new CompilerException("Unsupported binary operator: " + operator, null);
 			}
+
 		} else if (node instanceof UnaryExpressionNode unaryNode) {
 			String operator = unaryNode.getOperator();
 			emitInstructions(unaryNode.getOperand(), irBuilder);
 			generateUnaryOperatorInstructions(operator, irBuilder);
+
 		} else {
 			throw new CompilerException("Unsupported AST node type: " + node.getClass(), null);
 		}
@@ -88,6 +97,7 @@ public class PcapCompiler extends AbstractBpfCompiler<PcapTokenType, PcapASTNode
 
 			// Perform A = A ^ X (logical NOT)
 			irBuilder.emit(BpfInstruction.create(BpfOpcode.XOR_K, 0, 0, 0));
+
 		} else {
 			throw new CompilerException("Unsupported unary operator: " + operator, null);
 		}

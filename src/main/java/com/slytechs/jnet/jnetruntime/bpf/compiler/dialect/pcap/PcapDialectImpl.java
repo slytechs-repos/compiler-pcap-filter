@@ -19,7 +19,7 @@ public class PcapDialectImpl implements PcapDialect {
 	 */
 	@Override
 	public Lexer<PcapTokenType> createLexer(String source) throws CompilerException {
-		throw new UnsupportedOperationException("not implemented yet");
+		return new PcapLexer(source);
 	}
 
 	/**
@@ -27,6 +27,6 @@ public class PcapDialectImpl implements PcapDialect {
 	 */
 	@Override
 	public Parser<PcapTokenType, PcapASTNode> createParser(Lexer<PcapTokenType> lexer) throws CompilerException {
-		throw new UnsupportedOperationException("not implemented yet");
+		return new PcapParser(lexer);
 	}
 }
