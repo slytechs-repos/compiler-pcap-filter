@@ -1,6 +1,5 @@
 package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect;
 import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
 import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer;
 import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Parser;
@@ -8,7 +7,7 @@ import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Parser;
 /**
  * Concrete implementation of PcapDialect.
  */
-public class PcapDialectImpl implements CompilerDialect<PcapTokenType, PcapASTNode> {
+public class PcapDialectImpl implements PcapDialect {
 
 	@Override
 	public String getName() {

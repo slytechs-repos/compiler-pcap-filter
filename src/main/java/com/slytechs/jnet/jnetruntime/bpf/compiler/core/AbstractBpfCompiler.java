@@ -14,7 +14,7 @@ import com.slytechs.jnet.jnetruntime.bpf.vm.core.BpfProgram;
  * Base implementation of the BpfCompiler interface.
  */
 public abstract class AbstractBpfCompiler<T extends TokenType, N extends ASTNode>
-		implements BpfCompiler<T, N> {
+		implements BpfCompiler {
 
 	protected CompilerDialect<T, N> dialect;
 	protected CompilerOptions options;
@@ -50,9 +50,10 @@ public abstract class AbstractBpfCompiler<T extends TokenType, N extends ASTNode
 		return program;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public CompilerDialect<T, N> getDialect() {
-		return dialect;
+	public <T extends TokenType, N extends ASTNode> CompilerDialect<T, N> getDialect() {
+		return (CompilerDialect<T, N>) dialect;
 	}
 
 	protected abstract Lexer<T> createLexer(String source) throws CompilerException;

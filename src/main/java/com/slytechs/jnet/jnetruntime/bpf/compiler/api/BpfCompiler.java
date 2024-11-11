@@ -8,7 +8,7 @@ import com.slytechs.jnet.jnetruntime.bpf.vm.core.BpfProgram;
 /**
  * The primary interface for compiling source code into BPF programs.
  */
-public interface BpfCompiler<T extends TokenType, N extends ASTNode> {
+public interface BpfCompiler {
 
 	/**
 	 * Compiles the given source code into a BPF program.
@@ -35,7 +35,7 @@ public interface BpfCompiler<T extends TokenType, N extends ASTNode> {
 	 *
 	 * @return the compiler dialect
 	 */
-	CompilerDialect<T, N> getDialect();
+	<T extends TokenType, N extends ASTNode> CompilerDialect<T, N> getDialect();
 
 	/**
 	 * Sets the compiler options to use during compilation.

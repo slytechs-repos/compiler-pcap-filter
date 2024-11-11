@@ -17,7 +17,6 @@
  */
 package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.wireshark;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect;
 import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
 import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer;
 import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Parser;
@@ -26,7 +25,7 @@ import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Parser;
  * @author Mark Bednarczyk
  *
  */
-public class WiresharkDialectImpl implements CompilerDialect<WiresharkTokenType, WiresharkASTNode> {
+public class WiresharkDialectImpl implements WiresharkDialect {
 
 	/**
 	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#getName()
@@ -48,7 +47,8 @@ public class WiresharkDialectImpl implements CompilerDialect<WiresharkTokenType,
 	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#createParser(com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer)
 	 */
 	@Override
-	public Parser<WiresharkTokenType, WiresharkASTNode> createParser(Lexer<WiresharkTokenType> lexer) throws CompilerException {
+	public Parser<WiresharkTokenType, WiresharkASTNode> createParser(Lexer<WiresharkTokenType> lexer)
+			throws CompilerException {
 		throw new UnsupportedOperationException("not implemented yet");
 	}
 

@@ -17,7 +17,6 @@
  */
 package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.ntpl;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect;
 import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
 import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer;
 import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Parser;
@@ -26,7 +25,7 @@ import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Parser;
  * @author Mark Bednarczyk
  *
  */
-public class NtplDialectImpl implements CompilerDialect<NtplTokenType, NtplASTNode> {
+public class NtplDialectImpl implements NtplDialect {
 
 	/**
 	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#getName()
