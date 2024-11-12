@@ -19,5 +19,11 @@
  * 
  */
 module com.slytechs.jnet.jnetruntime.bpf.compiler {
+	exports com.slytechs.jnet.jnetruntime.bpf.compiler.api;
+	exports com.slytechs.jnet.jnetruntime.bpf.compiler.frontend;
+	exports com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap;
+	exports com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.wireshark;
+	exports com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.ntpl;
+
 	requires com.slytechs.jnet.jnetruntime.bpf.vm;
 }
