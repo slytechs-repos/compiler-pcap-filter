@@ -20,7 +20,7 @@ import com.slytechs.jnet.jnetpcap.bpf.vm.instruction.BpfOpcode;
 public class WiresharkCompiler extends AbstractCompiler<BpfIR, BpfProgram> {
 
 	public WiresharkCompiler() {
-		super(new WiresharkDialect(), new BpfBackend());
+		super(new WiresharkFrontend(), new BpfBackend());
 	}
 
 	@Override

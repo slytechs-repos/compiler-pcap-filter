@@ -18,8 +18,6 @@ public class PcapFrontend implements CompilerFrontend {
 	public String toString() {
 		return "PcapFrontend ["
 				+ "name=" + getName()
-				+ ", lexer=PcapLexer []"
-				+ ", parser=PcapParser []"
 				+ "]";
 	}
 

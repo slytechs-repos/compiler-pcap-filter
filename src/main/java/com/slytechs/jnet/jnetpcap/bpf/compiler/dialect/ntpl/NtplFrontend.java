@@ -28,13 +28,22 @@ import com.slytechs.jnet.compiler.frontend.Parser;
  *
  */
 public class NtplFrontend implements CompilerFrontend {
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "NtplFrontend ["
+				+ "name=" + getName()
+				+ "]";
+	}
 
 	/**
 	 * @see com.slytechs.jnet.compiler.CompilerFrontend#getName()
 	 */
 	@Override
 	public String getName() {
-		throw new UnsupportedOperationException("not implemented yet");
+		return "Ntpl";
 	}
 
 	/**

@@ -40,6 +40,16 @@ import com.slytechs.jnet.jnetpcap.bpf.vm.instruction.BpfOpcode;
 public class BpfBackend implements CompilerBackend<BpfProgram, BpfIR> {
 
 	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BpfBackend ["
+				+ "name=" + getName()
+				+ "]";
+	}
+
+	/**
 	 * @see com.slytechs.jnet.compiler.IRDialect#generateIR(com.slytechs.jnet.compiler.frontend.ASTNode)
 	 */
 	@Override
@@ -275,6 +285,22 @@ public class BpfBackend implements CompilerBackend<BpfProgram, BpfIR> {
 	@Override
 	public BackendDialect backendDialect() {
 		return BackendDialect.BERKLEY_PACKET_FILTER;
+	}
+
+	/**
+	 * @see com.slytechs.jnet.compiler.CompilerBackend#backendDialectId()
+	 */
+	@Override
+	public int backendDialectId() {
+		return BackendDialect.BPF_BACKEND_DIALECT_ID;
+	}
+
+	/**
+	 * @see com.slytechs.jnet.compiler.CompilerBackend#getName()
+	 */
+	@Override
+	public String getName() {
+		return "BPF";
 	}
 
 }

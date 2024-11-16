@@ -27,7 +27,17 @@ import com.slytechs.jnet.compiler.frontend.Parser;
  * @author Mark Bednarczyk
  *
  */
-public class WiresharkDialect implements CompilerFrontend {
+public class WiresharkFrontend implements CompilerFrontend {
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "WiresharkFrontend ["
+				+ "name=" + getName()
+				+ "]";
+	}
 
 	/**
 	 * @see com.slytechs.jnet.compiler.CompilerFrontend#getName()

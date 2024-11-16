@@ -1,4 +1,3 @@
-
 /*
  * Sly Technologies Free License
  * 
@@ -16,14 +15,70 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-/**
- * 
- */
 
+import com.slytechs.jnet.compiler.CompilerBackend;
 import com.slytechs.jnet.compiler.CompilerFrontend;
+import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl.NtplFrontend;
+import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.BpfBackend;
 import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.PcapFrontend;
+import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark.WiresharkFrontend;
 
+@SuppressWarnings("rawtypes")
+/**
+ * BPF compiler module providing multiple filter dialect implementations. This
+ * module implements a compiler framework for Berkeley Packet Filter (BPF)
+ * programs with support for multiple front-end dialects and back-end code
+ * generation.
+ * 
+ * <p>
+ * The module provides three distinct compiler front-ends:
+ * <ul>
+ * <li>Pcap - Classic libpcap filter syntax</li>
+ * <li>Wireshark - Extended Wireshark display filter syntax</li>
+ * <li>NTPL - Intel's Network Time Protocol Language filter syntax</li>
+ * </ul>
+ * </p>
+ * 
+ * <p>
+ * For code generation, the module includes:
+ * <ul>
+ * <li>BPF Backend - Generates classic BPF bytecode</li>
+ * </ul>
+ * </p>
+ * 
+ * <h2>Service Providers</h2>
+ * <p>
+ * This module provides implementations for the following service interfaces:
+ * <ul>
+ * <li>{@link CompilerBackend} - Implemented by {@link BpfBackend}</li>
+ * <li>{@link CompilerFrontend} - Implemented by {@link PcapFrontend},
+ * {@link WiresharkFrontend}, and {@link NtplFrontend}</li>
+ * </ul>
+ * </p>
+ * 
+ * <h2>Module Dependencies</h2>
+ * <p>
+ * Required modules:
+ * <ul>
+ * <li>com.slytechs.jnet.jnetpcap.bpf.vm - BPF virtual machine
+ * implementation</li>
+ * <li>com.slytechs.jnet.compiler - Core compiler framework</li>
+ * <li>com.slytechs.jnet.jnetruntime - Runtime support libraries</li>
+ * </ul>
+ * </p>
+ * 
+ * @provides CompilerBackend Provides BPF bytecode generation backend
+ * @provides CompilerFrontend Provides Pcap, Wireshark and NTPL filter syntax
+ *           frontends
+ * 
+ * @uses com.slytechs.jnet.compiler.CompilerBackend
+ * @uses com.slytechs.jnet.compiler.CompilerFrontend
+ * 
+ * @version 1.0
+ * @author Sly Technologies Inc
+ */
 module com.slytechs.jnet.jnetpcap.bpf.compiler {
+
 	exports com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap;
 	exports com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark;
 	exports com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl;
@@ -33,5 +88,17 @@ module com.slytechs.jnet.jnetpcap.bpf.compiler {
 	requires transitive com.slytechs.jnet.compiler;
 	requires transitive com.slytechs.jnet.jnetruntime;
 
-	provides CompilerFrontend with PcapFrontend;
+	/**
+	 * Provides the BPF backend implementation for code generation.
+	 */
+	provides CompilerBackend with BpfBackend;
+
+	/**
+	 * Provides multiple front-end implementations for different filter dialects:
+	 * PCap, Wireshark, and NTPL.
+	 */
+	provides CompilerFrontend with
+			PcapFrontend,
+			WiresharkFrontend,
+			NtplFrontend;
 }
