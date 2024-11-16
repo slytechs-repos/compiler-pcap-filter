@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import com.slytechs.jnet.compiler.CompilerException;
+import com.slytechs.jnet.compiler.dialect.dialect.pcap.PcapCompiler;
+import com.slytechs.jnet.compiler.dialect.dialect.pcap.PcapLexer;
+import com.slytechs.jnet.compiler.dialect.dialect.pcap.PcapParser;
+import com.slytechs.jnet.compiler.dialect.dialect.pcap.ProtocolNode;
 import com.slytechs.jnet.compiler.frontend.ASTNode;
-import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.PcapCompiler;
-import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.PcapLexer;
-import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.PcapParser;
-import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.ProtocolNode;
 
 public class CompilerTest {
 

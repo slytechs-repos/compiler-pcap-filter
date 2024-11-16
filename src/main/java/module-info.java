@@ -18,10 +18,10 @@
 
 import com.slytechs.jnet.compiler.CompilerBackend;
 import com.slytechs.jnet.compiler.CompilerFrontend;
-import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl.NtplFrontend;
-import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.BpfBackend;
-import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.PcapFrontend;
-import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark.WiresharkFrontend;
+import com.slytechs.jnet.compiler.dialect.dialect.ntpl.NtplFrontend;
+import com.slytechs.jnet.compiler.dialect.dialect.pcap.BpfBackend;
+import com.slytechs.jnet.compiler.dialect.dialect.pcap.PcapFrontend;
+import com.slytechs.jnet.compiler.dialect.dialect.wireshark.WiresharkFrontend;
 
 @SuppressWarnings("rawtypes")
 /**
@@ -60,7 +60,7 @@ import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark.WiresharkFronte
  * <p>
  * Required modules:
  * <ul>
- * <li>com.slytechs.jnet.jnetpcap.bpf.vm - BPF virtual machine
+ * <li>com.slytechs.jnet.jnetruntime.jnpl.vm - BPF virtual machine
  * implementation</li>
  * <li>com.slytechs.jnet.compiler - Core compiler framework</li>
  * <li>com.slytechs.jnet.jnetruntime - Runtime support libraries</li>
@@ -77,14 +77,14 @@ import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark.WiresharkFronte
  * @version 1.0
  * @author Sly Technologies Inc
  */
-module com.slytechs.jnet.jnetpcap.bpf.compiler {
+module com.slytechs.jnet.compiler.dialect.pcap {
 
-	exports com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap;
-	exports com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark;
-	exports com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl;
-	exports com.slytechs.jnet.jnetpcap.bpf.compiler.ir;
+	exports com.slytechs.jnet.compiler.dialect.dialect.pcap;
+	exports com.slytechs.jnet.compiler.dialect.dialect.wireshark;
+	exports com.slytechs.jnet.compiler.dialect.dialect.ntpl;
+	exports com.slytechs.jnet.compiler.dialect.ir;
 
-	requires transitive com.slytechs.jnet.jnetpcap.bpf.vm;
+	requires transitive com.slytechs.jnet.jnetruntime.jnpl.vm;
 	requires transitive com.slytechs.jnet.compiler;
 	requires transitive com.slytechs.jnet.jnetruntime;
 
