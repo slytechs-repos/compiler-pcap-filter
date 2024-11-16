@@ -1,9 +1,9 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.wireshark;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.TokenType;
+import com.slytechs.jnet.compiler.frontend.TokenType;
 
 /**
- * Enumeration of token types specific to the Wireshark dialect.
+ * Enumeration of token types specific to the Wireshark compilerFrontend.
  */
 public enum WiresharkTokenType implements TokenType {
 	IDENTIFIER,

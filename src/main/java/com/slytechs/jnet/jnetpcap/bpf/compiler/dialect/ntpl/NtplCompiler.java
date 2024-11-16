@@ -1,36 +1,38 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.ntpl;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl;
 
 import java.util.List;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CodeGenerationException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.core.AbstractBpfCompiler;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Parser;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.ir.BpfIR;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.ir.IRBuilder;
-import com.slytechs.jnet.jnetruntime.bpf.vm.core.BpfInstruction;
-import com.slytechs.jnet.jnetruntime.bpf.vm.core.BpfProgram;
-import com.slytechs.jnet.jnetruntime.bpf.vm.instruction.BpfOpcode;
+import com.slytechs.jnet.compiler.CodeGenerationException;
+import com.slytechs.jnet.compiler.CompilerException;
+import com.slytechs.jnet.compiler.core.AbstractCompiler;
+import com.slytechs.jnet.compiler.frontend.ASTNode;
+import com.slytechs.jnet.compiler.frontend.Lexer;
+import com.slytechs.jnet.compiler.frontend.Parser;
+import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.BpfBackend;
+import com.slytechs.jnet.jnetpcap.bpf.compiler.ir.BpfIR;
+import com.slytechs.jnet.jnetpcap.bpf.compiler.ir.IRBuilder;
+import com.slytechs.jnet.jnetpcap.bpf.vm.core.BpfInstruction;
+import com.slytechs.jnet.jnetpcap.bpf.vm.core.BpfProgram;
+import com.slytechs.jnet.jnetpcap.bpf.vm.instruction.BpfOpcode;
 
-public class NtplCompiler extends AbstractBpfCompiler<NtplTokenType, NtplASTNode> {
+public class NtplCompiler extends AbstractCompiler<BpfIR, BpfProgram> {
 
 	public NtplCompiler() {
-		this.dialect = new NtplDialectImpl();
+		super(new NtplFrontend(), new BpfBackend());
 	}
 
 	@Override
-	protected Lexer<NtplTokenType> createLexer(String source) throws CompilerException {
+	protected Lexer createLexer(String source) throws CompilerException {
 		return new NtplLexer(source);
 	}
 
 	@Override
-	protected Parser<NtplTokenType, NtplASTNode> createParser(Lexer<NtplTokenType> lexer) throws CompilerException {
+	protected Parser createParser(Lexer lexer) throws CompilerException {
 		return new NtplParser(lexer);
 	}
 
 	@Override
-	protected BpfIR generateIR(NtplASTNode ast) throws CompilerException {
+	protected BpfIR generateIR(ASTNode ast) throws CompilerException {
 		IRBuilder irBuilder = new IRBuilder();
 		emitInstructions(ast, irBuilder);
 		return irBuilder;
@@ -46,7 +48,7 @@ public class NtplCompiler extends AbstractBpfCompiler<NtplTokenType, NtplASTNode
 		}
 	}
 
-	private void emitInstructions(NtplASTNode node, IRBuilder irBuilder) throws CompilerException {
+	private void emitInstructions(ASTNode node, IRBuilder irBuilder) throws CompilerException {
 		if (node instanceof FilterExpressionNode) {
 			generateFilterExpressionInstructions((FilterExpressionNode) node, irBuilder);
 		} else {

@@ -1,9 +1,9 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.ntpl;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.TokenType;
+import com.slytechs.jnet.compiler.frontend.TokenType;
 
 /**
- * Enumeration of token types specific to the NTPL dialect.
+ * Enumeration of token types specific to the NTPL compilerFrontend.
  */
 public enum NtplTokenType implements TokenType {
 	IDENTIFIER,

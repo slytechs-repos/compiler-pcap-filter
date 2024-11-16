@@ -1,11 +1,13 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap;
 
 import java.util.Objects;
+
+import com.slytechs.jnet.compiler.frontend.ASTNode;
 
 /**
  * Represents a protocol node in the Pcap AST.
  */
-public class ProtocolNode extends PcapASTNode {
+public class ProtocolNode extends ASTNode {
 
     /**
 	 * @see java.lang.Object#hashCode()

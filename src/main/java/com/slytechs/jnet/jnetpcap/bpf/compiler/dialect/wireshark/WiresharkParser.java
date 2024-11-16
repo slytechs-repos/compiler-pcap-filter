@@ -1,22 +1,23 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.wireshark;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.ParserException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.AbstractParser;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer;
+import com.slytechs.jnet.compiler.CompilerException;
+import com.slytechs.jnet.compiler.ParserException;
+import com.slytechs.jnet.compiler.frontend.ASTNode;
+import com.slytechs.jnet.compiler.frontend.AbstractParser;
+import com.slytechs.jnet.compiler.frontend.Lexer;
 
 /**
- * Concrete parser for the Wireshark dialect.
+ * Concrete parser for the Wireshark compilerFrontend.
  */
-public class WiresharkParser extends AbstractParser<WiresharkTokenType, WiresharkASTNode> {
+public class WiresharkParser extends AbstractParser {
 
-	public WiresharkParser(Lexer<WiresharkTokenType> lexer) throws CompilerException {
+	public WiresharkParser(Lexer lexer) throws CompilerException {
 		super(lexer);
 	}
 
 	@Override
-	public WiresharkASTNode parse() throws CompilerException {
-		WiresharkASTNode node = parseExpression();
+	public ASTNode parse() throws CompilerException {
+		ASTNode node = parseExpression();
 		if (currentToken.getType() != WiresharkTokenType.EOF) {
 			throw new ParserException("Unexpected token after end of expression", currentToken.getPosition(), null,
 					currentToken);
@@ -24,31 +25,31 @@ public class WiresharkParser extends AbstractParser<WiresharkTokenType, Wireshar
 		return node;
 	}
 
-	private WiresharkASTNode parseExpression() throws CompilerException {
-		WiresharkASTNode left = parseTerm();
+	private ASTNode parseExpression() throws CompilerException {
+		ASTNode left = parseTerm();
 
 		while (currentToken.getType() == WiresharkTokenType.OPERATOR && (currentToken.getValue().equals("and")
 				|| currentToken.getValue().equals("or"))) {
 			String operator = currentToken.getValue();
 			match(WiresharkTokenType.OPERATOR);
-			WiresharkASTNode right = parseTerm();
+			ASTNode right = parseTerm();
 			left = new LogicalExpressionNode(operator, left, right);
 		}
 
 		return left;
 	}
 
-	private WiresharkASTNode parseTerm() throws CompilerException {
+	private ASTNode parseTerm() throws CompilerException {
 		if (currentToken.getType() == WiresharkTokenType.OPERATOR && currentToken.getValue().equals("not")) {
 			match(WiresharkTokenType.OPERATOR);
-			WiresharkASTNode operand = parseFactor();
+			ASTNode operand = parseFactor();
 			return new UnaryExpressionNode("not", operand);
 		} else {
 			return parseFactor();
 		}
 	}
 
-	private WiresharkASTNode parseFactor() throws CompilerException {
+	private ASTNode parseFactor() throws CompilerException {
 		if (currentToken.getType() == WiresharkTokenType.FIELD_NAME) {
 			String fieldName = currentToken.getValue();
 			match(WiresharkTokenType.FIELD_NAME);

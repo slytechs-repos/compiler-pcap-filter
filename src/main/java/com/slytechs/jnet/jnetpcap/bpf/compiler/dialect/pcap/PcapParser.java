@@ -1,22 +1,31 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.ParserException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.AbstractParser;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer;
+import com.slytechs.jnet.compiler.CompilerException;
+import com.slytechs.jnet.compiler.ParserException;
+import com.slytechs.jnet.compiler.frontend.ASTNode;
+import com.slytechs.jnet.compiler.frontend.AbstractParser;
+import com.slytechs.jnet.compiler.frontend.Lexer;
 
 /**
- * Concrete parser for the Pcap dialect.
+ * Concrete parser for the Pcap compilerFrontend.
  */
-public class PcapParser extends AbstractParser<PcapTokenType, PcapASTNode> {
+public class PcapParser extends AbstractParser {
 
-	public PcapParser(Lexer<PcapTokenType> lexer) throws CompilerException {
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "PcapParser []";
+	}
+
+	public PcapParser(Lexer lexer) throws CompilerException {
 		super(lexer);
 	}
 
 	@Override
-	public PcapASTNode parse() throws CompilerException {
-		PcapASTNode node = parseExpression();
+	public ASTNode parse() throws CompilerException {
+		ASTNode node = parseExpression();
 
 		if (currentToken.getType() != PcapTokenType.EOF) {
 			throw new ParserException("Unexpected token after end of expression",
@@ -28,8 +37,8 @@ public class PcapParser extends AbstractParser<PcapTokenType, PcapASTNode> {
 		return node;
 	}
 
-	private PcapASTNode parseExpression() throws CompilerException {
-		PcapASTNode left = parseTerm();
+	private ASTNode parseExpression() throws CompilerException {
+		ASTNode left = parseTerm();
 
 		while (currentToken.getType() == PcapTokenType.OPERATOR
 				&& (false
@@ -44,7 +53,7 @@ public class PcapParser extends AbstractParser<PcapTokenType, PcapASTNode> {
 			String operator = currentToken.getValue();
 			match(PcapTokenType.OPERATOR);
 
-			PcapASTNode right = parseTerm();
+			ASTNode right = parseTerm();
 
 			left = new BinaryExpressionNode(operator, left, right);
 		}
@@ -52,7 +61,7 @@ public class PcapParser extends AbstractParser<PcapTokenType, PcapASTNode> {
 		return left;
 	}
 
-	private PcapASTNode parseTerm() throws CompilerException {
+	private ASTNode parseTerm() throws CompilerException {
 		if (currentToken.getType() == PcapTokenType.OPERATOR
 				&& (false
 
@@ -64,7 +73,7 @@ public class PcapParser extends AbstractParser<PcapTokenType, PcapASTNode> {
 			String operator = currentToken.getValue();
 			match(PcapTokenType.OPERATOR);
 
-			PcapASTNode operand = parseFactor();
+			ASTNode operand = parseFactor();
 
 			return new UnaryExpressionNode(operator, operand);
 
@@ -73,11 +82,11 @@ public class PcapParser extends AbstractParser<PcapTokenType, PcapASTNode> {
 		}
 	}
 
-	private PcapASTNode parseFactor() throws CompilerException {
+	private ASTNode parseFactor() throws CompilerException {
 		if (currentToken.getType() == PcapTokenType.LEFT_PAREN) {
 			match(PcapTokenType.LEFT_PAREN);
 
-			PcapASTNode expr = parseExpression();
+			ASTNode expr = parseExpression();
 			match(PcapTokenType.RIGHT_PAREN);
 
 			return expr;

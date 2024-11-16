@@ -1,6 +1,6 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap;
 
-import static com.slytechs.jnet.jnetruntime.bpf.compiler.core.AddressParser.*;
+import static com.slytechs.jnet.compiler.core.AddressParser.*;
 import static java.lang.Character.*;
 
 import java.util.HashMap;
@@ -11,16 +11,24 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.Position;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.core.AddressParser;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.AbstractLexer;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Token;
+import com.slytechs.jnet.compiler.CompilerException;
+import com.slytechs.jnet.compiler.Position;
+import com.slytechs.jnet.compiler.core.AddressParser;
+import com.slytechs.jnet.compiler.frontend.AbstractLexer;
+import com.slytechs.jnet.compiler.frontend.Token;
 
 /**
- * Concrete lexer for the Pcap dialect.
+ * Concrete lexer for the Pcap compilerFrontend.
  */
-public class PcapLexer extends AbstractLexer<PcapTokenType> {
+public class PcapLexer extends AbstractLexer {
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "PcapLexer []";
+	}
 
 	private static final Set<String> KEYWORDS = new HashSet<>();
 	private static final Set<String> PROTOCOLS = new HashSet<>();
@@ -93,7 +101,7 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 	}
 
 	@Override
-	public Token<PcapTokenType> nextToken() throws CompilerException {
+	public Token nextToken() throws CompilerException {
 		var token = nextToken0();
 
 		System.out.println("::nextToken token=" + token);
@@ -101,11 +109,11 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 		return token;
 	}
 
-	public Token<PcapTokenType> nextToken0() throws CompilerException {
+	public Token nextToken0() throws CompilerException {
 		skipWhitespace();
 
 		if (isEOF()) {
-			return new Token<>(PcapTokenType.EOF, "", new Position(lineNumber, columnNumber));
+			return new Token(PcapTokenType.EOF, "", new Position(lineNumber, columnNumber));
 		}
 
 		char ch = peekChar();
@@ -135,7 +143,7 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 		}
 	}
 
-	private Token<PcapTokenType> readIdentifierOrKeyword() {
+	private Token readIdentifierOrKeyword() {
 		StringBuilder sb = new StringBuilder();
 		Position start = new Position(lineNumber, columnNumber);
 
@@ -154,23 +162,23 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 		String value = sb.toString().toLowerCase(); // Pcap is case-insensitive
 
 		if (KEYWORDS.contains(value)) {
-			return new Token<>(PcapTokenType.KEYWORD, value, start);
+			return new Token(PcapTokenType.KEYWORD, value, start);
 
 		} else if (PROTOCOLS.contains(value)) {
-			return new Token<>(PcapTokenType.PROTOCOL, value, start);
+			return new Token(PcapTokenType.PROTOCOL, value, start);
 
 		} else if (TCP_FLAGS.containsKey(value)) {
-			return new Token<>(PcapTokenType.TCP_FLAG, value, TCP_FLAGS.get(value), start);
+			return new Token(PcapTokenType.TCP_FLAG, value, TCP_FLAGS.get(value), start);
 
 		} else if (ICMP_TYPES.containsKey(value)) {
-			return new Token<>(PcapTokenType.ICMP_TYPE, value, ICMP_TYPES.get(value), start);
+			return new Token(PcapTokenType.ICMP_TYPE, value, ICMP_TYPES.get(value), start);
 
 		} else {
-			return new Token<>(PcapTokenType.IDENTIFIER, value, start);
+			return new Token(PcapTokenType.IDENTIFIER, value, start);
 		}
 	}
 
-	private Token<PcapTokenType> readAddress() {
+	private Token readAddress() {
 		StringBuilder sb = new StringBuilder();
 		Position start = new Position(lineNumber, columnNumber);
 
@@ -296,7 +304,7 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 		return null;
 	}
 
-	private Token<PcapTokenType> scanForAddressType(
+	private Token scanForAddressType(
 			PcapTokenType type,
 			String value,
 			Position start,
@@ -308,10 +316,10 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 
 		skip(value.length());
 
-		return new Token<>(type, value, address.get(), start);
+		return new Token(type, value, address.get(), start);
 	}
 
-	private Token<PcapTokenType> readNumberOrAddress() {
+	private Token readNumberOrAddress() {
 
 		// Check for an address token
 		var tkn = readAddress();
@@ -322,7 +330,7 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 		Position start = new Position(lineNumber, columnNumber);
 
 		if (!isEOF() && !isHexDigit(peekChar()))
-			return new Token<>(PcapTokenType.NUMBER, "" + nextChar(), start);
+			return new Token(PcapTokenType.NUMBER, "" + nextChar(), start);
 
 		while (!isEOF() && (isHexDigit(peekChar()) || peekChar() == 'x' || peekChar() == '_')) {
 			sb.append(nextChar());
@@ -332,7 +340,7 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 		return Token.ofInt(PcapTokenType.NUMBER, value, start);
 	}
 
-	private Token<PcapTokenType> readString() throws CompilerException {
+	private Token readString() throws CompilerException {
 		Position start = new Position(lineNumber, columnNumber);
 		nextChar(); // Consume the opening quote
 
@@ -349,7 +357,7 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 		nextChar(); // Consume the closing quote
 		String value = sb.toString();
 
-		return new Token<>(PcapTokenType.STRING, value, start);
+		return new Token(PcapTokenType.STRING, value, start);
 	}
 
 	private boolean isOperatorStart(char ch) {
@@ -374,7 +382,7 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 		;
 	}
 
-	private Token<PcapTokenType> readOperator() throws CompilerException {
+	private Token readOperator() throws CompilerException {
 		Position start = new Position(lineNumber, columnNumber);
 		char ch = nextChar();
 		String value = String.valueOf(ch);
@@ -502,6 +510,6 @@ public class PcapLexer extends AbstractLexer<PcapTokenType> {
 			break;
 		}
 
-		return new Token<>(type, value, start);
+		return new Token(type, value, start);
 	}
 }

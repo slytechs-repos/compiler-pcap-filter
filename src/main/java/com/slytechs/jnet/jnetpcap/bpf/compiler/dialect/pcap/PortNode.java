@@ -1,9 +1,11 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap;
+
+import com.slytechs.jnet.compiler.frontend.ASTNode;
 
 /**
  * Represents a port node in the Pcap AST.
  */
-public class PortNode extends PcapASTNode {
+public class PortNode extends ASTNode {
 
 	private final String port;
 

@@ -15,41 +15,58 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.wireshark;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Parser;
+import com.slytechs.jnet.compiler.CompilerDialect;
+import com.slytechs.jnet.compiler.CompilerException;
+import com.slytechs.jnet.compiler.CompilerFrontend;
+import com.slytechs.jnet.compiler.frontend.Lexer;
+import com.slytechs.jnet.compiler.frontend.Parser;
 
 /**
  * @author Mark Bednarczyk
  *
  */
-public class WiresharkDialectImpl implements WiresharkDialect {
+public class WiresharkDialect implements CompilerFrontend {
 
 	/**
-	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#getName()
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#getName()
 	 */
 	@Override
 	public String getName() {
-		throw new UnsupportedOperationException("not implemented yet");
+		return "Wireshark";
 	}
 
 	/**
-	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#createLexer(java.lang.String)
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#createLexer(java.lang.String)
 	 */
 	@Override
-	public Lexer<WiresharkTokenType> createLexer(String source) throws CompilerException {
+	public Lexer createLexer(String source) throws CompilerException {
 		return new WiresharkLexer(source);
 	}
 
 	/**
-	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#createParser(com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer)
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#createParser(com.slytechs.jnet.compiler.frontend.Lexer)
 	 */
 	@Override
-	public Parser<WiresharkTokenType, WiresharkASTNode> createParser(Lexer<WiresharkTokenType> lexer)
+	public Parser createParser(Lexer lexer)
 			throws CompilerException {
 		return new WiresharkParser(lexer);
 	}
 
+	/**
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#compilerDialect()
+	 */
+	@Override
+	public CompilerDialect compilerDialect() {
+		return CompilerDialect.WIRESHARK;
+	}
+
+	/**
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#compilerDialectId()
+	 */
+	@Override
+	public int compilerDialectId() {
+		return CompilerDialect.WIRESHARK_DIALECT_ID;
+	}
 }

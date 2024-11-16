@@ -1,14 +1,16 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap;
+
+import com.slytechs.jnet.compiler.frontend.ASTNode;
 
 /**
  * Represents a unary expression node in the Pcap AST.
  */
-public class UnaryExpressionNode extends PcapASTNode {
+public class UnaryExpressionNode extends ASTNode {
 
 	private final String operator;
-	private final PcapASTNode operand;
+	private final ASTNode operand;
 
-	public UnaryExpressionNode(String operator, PcapASTNode operand) {
+	public UnaryExpressionNode(String operator, ASTNode operand) {
 		this.operator = operator;
 		this.operand = operand;
 	}
@@ -17,7 +19,7 @@ public class UnaryExpressionNode extends PcapASTNode {
 		return operator;
 	}
 
-	public PcapASTNode getOperand() {
+	public ASTNode getOperand() {
 		return operand;
 	}
 }

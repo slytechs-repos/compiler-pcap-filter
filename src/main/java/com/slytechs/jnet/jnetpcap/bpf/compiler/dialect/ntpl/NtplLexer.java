@@ -1,103 +1,103 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.ntpl;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.Position;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.AbstractLexer;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Token;
+import com.slytechs.jnet.compiler.CompilerException;
+import com.slytechs.jnet.compiler.Position;
+import com.slytechs.jnet.compiler.frontend.AbstractLexer;
+import com.slytechs.jnet.compiler.frontend.Token;
 
 /**
- * Concrete lexer for the NTPL dialect.
+ * Concrete lexer for the NTPL compilerFrontend.
  */
-public class NtplLexer extends AbstractLexer<NtplTokenType> {
+public class NtplLexer extends AbstractLexer {
 
-    private static final Set<String> KEYWORDS = new HashSet<>();
+	private static final Set<String> KEYWORDS = new HashSet<>();
 
-    static {
-        KEYWORDS.add("IF");
-        KEYWORDS.add("MAC_ADDR");
-        // Add more keywords as needed
-    }
+	static {
+		KEYWORDS.add("IF");
+		KEYWORDS.add("MAC_ADDR");
+		// Add more keywords as needed
+	}
 
-    public NtplLexer(String input) {
-        super(input);
-    }
+	public NtplLexer(String input) {
+		super(input);
+	}
 
-    @Override
-    public Token<NtplTokenType> nextToken() throws CompilerException {
-        skipWhitespace();
+	@Override
+	public Token nextToken() throws CompilerException {
+		skipWhitespace();
 
-        if (isEOF()) {
-            return new Token<>(NtplTokenType.EOF, "", new Position(lineNumber, columnNumber));
-        }
+		if (isEOF()) {
+			return new Token(NtplTokenType.EOF, "", new Position(lineNumber, columnNumber));
+		}
 
-        char ch = peekChar();
+		char ch = peekChar();
 
-        if (Character.isLetter(ch)) {
-            return readIdentifierOrKeyword();
-        } else if (Character.isDigit(ch)) {
-            return readNumber();
-        } else if (ch == '"') {
-            return readString();
-        } else {
-            reportLexicalError("Invalid character", String.valueOf(ch));
-            return null; // Unreachable
-        }
-    }
+		if (Character.isLetter(ch)) {
+			return readIdentifierOrKeyword();
+		} else if (Character.isDigit(ch)) {
+			return readNumber();
+		} else if (ch == '"') {
+			return readString();
+		} else {
+			reportLexicalError("Invalid character", String.valueOf(ch));
+			return null; // Unreachable
+		}
+	}
 
-    private void skipWhitespace() {
-        while (!isEOF() && Character.isWhitespace(peekChar())) {
-            nextChar();
-        }
-    }
+	private void skipWhitespace() {
+		while (!isEOF() && Character.isWhitespace(peekChar())) {
+			nextChar();
+		}
+	}
 
-    private Token<NtplTokenType> readIdentifierOrKeyword() {
-        StringBuilder sb = new StringBuilder();
-        Position start = new Position(lineNumber, columnNumber);
+	private Token readIdentifierOrKeyword() {
+		StringBuilder sb = new StringBuilder();
+		Position start = new Position(lineNumber, columnNumber);
 
-        while (!isEOF() && Character.isLetterOrDigit(peekChar())) {
-            sb.append(nextChar());
-        }
+		while (!isEOF() && Character.isLetterOrDigit(peekChar())) {
+			sb.append(nextChar());
+		}
 
-        String value = sb.toString().toUpperCase();
+		String value = sb.toString().toUpperCase();
 
-        if (KEYWORDS.contains(value)) {
-            return new Token<>(NtplTokenType.KEYWORD, value, start);
-        } else {
-            return new Token<>(NtplTokenType.IDENTIFIER, value, start);
-        }
-    }
+		if (KEYWORDS.contains(value)) {
+			return new Token(NtplTokenType.KEYWORD, value, start);
+		} else {
+			return new Token(NtplTokenType.IDENTIFIER, value, start);
+		}
+	}
 
-    private Token<NtplTokenType> readNumber() {
-        StringBuilder sb = new StringBuilder();
-        Position start = new Position(lineNumber, columnNumber);
+	private Token readNumber() {
+		StringBuilder sb = new StringBuilder();
+		Position start = new Position(lineNumber, columnNumber);
 
-        while (!isEOF() && Character.isDigit(peekChar())) {
-            sb.append(nextChar());
-        }
+		while (!isEOF() && Character.isDigit(peekChar())) {
+			sb.append(nextChar());
+		}
 
-        String value = sb.toString();
-        return new Token<>(NtplTokenType.NUMBER, value, start);
-    }
+		String value = sb.toString();
+		return new Token(NtplTokenType.NUMBER, value, start);
+	}
 
-    private Token<NtplTokenType> readString() throws CompilerException {
-        Position start = new Position(lineNumber, columnNumber);
-        nextChar(); // Consume the opening quote
+	private Token readString() throws CompilerException {
+		Position start = new Position(lineNumber, columnNumber);
+		nextChar(); // Consume the opening quote
 
-        StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 
-        while (!isEOF() && peekChar() != '"') {
-            sb.append(nextChar());
-        }
+		while (!isEOF() && peekChar() != '"') {
+			sb.append(nextChar());
+		}
 
-        if (isEOF()) {
-            reportLexicalError("Unterminated string literal", sb.toString());
-        }
+		if (isEOF()) {
+			reportLexicalError("Unterminated string literal", sb.toString());
+		}
 
-        nextChar(); // Consume the closing quote
-        String value = sb.toString();
-        return new Token<>(NtplTokenType.STRING, value, start);
-    }
+		nextChar(); // Consume the closing quote
+		String value = sb.toString();
+		return new Token(NtplTokenType.STRING, value, start);
+	}
 }

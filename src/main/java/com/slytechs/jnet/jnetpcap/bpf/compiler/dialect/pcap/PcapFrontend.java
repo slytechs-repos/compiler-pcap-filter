@@ -1,13 +1,27 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Parser;
+import com.slytechs.jnet.compiler.CompilerDialect;
+import com.slytechs.jnet.compiler.CompilerException;
+import com.slytechs.jnet.compiler.CompilerFrontend;
+import com.slytechs.jnet.compiler.frontend.Lexer;
+import com.slytechs.jnet.compiler.frontend.Parser;
 
 /**
- * Concrete implementation of PcapDialect.
+ * Concrete implementation of PcapFrontend.
  */
-public class PcapDialectImpl implements PcapDialect {
+public class PcapFrontend implements CompilerFrontend {
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "PcapFrontend ["
+				+ "name=" + getName()
+				+ ", lexer=PcapLexer []"
+				+ ", parser=PcapParser []"
+				+ "]";
+	}
 
 	@Override
 	public String getName() {
@@ -15,18 +29,34 @@ public class PcapDialectImpl implements PcapDialect {
 	}
 
 	/**
-	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#createLexer(java.lang.String)
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#createLexer(java.lang.String)
 	 */
 	@Override
-	public Lexer<PcapTokenType> createLexer(String source) throws CompilerException {
+	public Lexer createLexer(String source) throws CompilerException {
 		return new PcapLexer(source);
 	}
 
 	/**
-	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#createParser(com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer)
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#createParser(com.slytechs.jnet.compiler.frontend.Lexer)
 	 */
 	@Override
-	public Parser<PcapTokenType, PcapASTNode> createParser(Lexer<PcapTokenType> lexer) throws CompilerException {
+	public Parser createParser(Lexer lexer) throws CompilerException {
 		return new PcapParser(lexer);
+	}
+
+	/**
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#compilerDialect()
+	 */
+	@Override
+	public CompilerDialect compilerDialect() {
+		return CompilerDialect.PCAP;
+	}
+
+	/**
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#compilerDialectId()
+	 */
+	@Override
+	public int compilerDialectId() {
+		return CompilerDialect.PCAP_DIALECT_ID;
 	}
 }

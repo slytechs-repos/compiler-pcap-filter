@@ -1,9 +1,11 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.ntpl;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl;
+
+import com.slytechs.jnet.compiler.frontend.ASTNode;
 
 /**
  * Represents a filter expression node in the NTPL AST.
  */
-public class FilterExpressionNode extends NtplASTNode {
+public class FilterExpressionNode extends ASTNode {
 
 	private final String condition;
 

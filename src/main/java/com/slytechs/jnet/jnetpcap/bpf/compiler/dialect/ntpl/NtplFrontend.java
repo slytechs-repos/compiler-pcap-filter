@@ -15,20 +15,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.ntpl;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Parser;
+import com.slytechs.jnet.compiler.CompilerDialect;
+import com.slytechs.jnet.compiler.CompilerException;
+import com.slytechs.jnet.compiler.CompilerFrontend;
+import com.slytechs.jnet.compiler.frontend.Lexer;
+import com.slytechs.jnet.compiler.frontend.Parser;
 
 /**
  * @author Mark Bednarczyk
  *
  */
-public class NtplDialectImpl implements NtplDialect {
+public class NtplFrontend implements CompilerFrontend {
 
 	/**
-	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#getName()
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#getName()
 	 */
 	@Override
 	public String getName() {
@@ -36,19 +38,34 @@ public class NtplDialectImpl implements NtplDialect {
 	}
 
 	/**
-	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#createLexer(java.lang.String)
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#createLexer(java.lang.String)
 	 */
 	@Override
-	public Lexer<NtplTokenType> createLexer(String source) throws CompilerException {
+	public Lexer createLexer(String source) throws CompilerException {
 		return new NtplLexer(source);
 	}
 
 	/**
-	 * @see com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerDialect#createParser(com.slytechs.jnet.jnetruntime.bpf.compiler.frontend.Lexer)
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#createParser(com.slytechs.jnet.compiler.frontend.Lexer)
 	 */
 	@Override
-	public Parser<NtplTokenType, NtplASTNode> createParser(Lexer<NtplTokenType> lexer) throws CompilerException {
+	public Parser createParser(Lexer lexer) throws CompilerException {
 		return new NtplParser(lexer);
 	}
 
+	/**
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#compilerDialect()
+	 */
+	@Override
+	public CompilerDialect compilerDialect() {
+		return CompilerDialect.NTPL;
+	}
+
+	/**
+	 * @see com.slytechs.jnet.compiler.CompilerFrontend#compilerDialectId()
+	 */
+	@Override
+	public int compilerDialectId() {
+		return CompilerDialect.NTPL_DIALECT_ID;
+	}
 }

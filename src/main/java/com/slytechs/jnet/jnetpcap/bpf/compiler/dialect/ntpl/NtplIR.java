@@ -1,4 +1,3 @@
-
 /*
  * Sly Technologies Free License
  * 
@@ -16,22 +15,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl;
+
+import com.slytechs.jnet.compiler.ir.IRNode;
+
 /**
- * 
+ * @author Mark Bednarczyk
+ *
  */
+public interface NtplIR extends IRNode {
 
-import com.slytechs.jnet.compiler.CompilerFrontend;
-import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.PcapFrontend;
-
-module com.slytechs.jnet.jnetpcap.bpf.compiler {
-	exports com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap;
-	exports com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark;
-	exports com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.ntpl;
-	exports com.slytechs.jnet.jnetpcap.bpf.compiler.ir;
-
-	requires transitive com.slytechs.jnet.jnetpcap.bpf.vm;
-	requires transitive com.slytechs.jnet.compiler;
-	requires transitive com.slytechs.jnet.jnetruntime;
-
-	provides CompilerFrontend with PcapFrontend;
 }

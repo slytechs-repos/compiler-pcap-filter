@@ -15,9 +15,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap;
 
-public class HostNode extends PcapASTNode {
+import com.slytechs.jnet.compiler.frontend.ASTNode;
+
+public class HostNode extends ASTNode {
 	private final String host;
 
 	public HostNode(String host) {

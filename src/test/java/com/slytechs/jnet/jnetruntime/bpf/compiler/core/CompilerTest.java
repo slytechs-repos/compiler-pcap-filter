@@ -6,17 +6,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.slytechs.jnet.jnetruntime.bpf.compiler.api.CompilerException;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap.PcapASTNode;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap.PcapCompiler;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap.PcapLexer;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap.PcapParser;
-import com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.pcap.ProtocolNode;
+import com.slytechs.jnet.compiler.CompilerException;
+import com.slytechs.jnet.compiler.frontend.ASTNode;
+import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.PcapCompiler;
+import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.PcapLexer;
+import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.PcapParser;
+import com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.pcap.ProtocolNode;
 
 public class CompilerTest {
 
 	/**
-	 * Test compiling the expression "A == 0x800" using the Pcap dialect compiler.
+	 * Test compiling the expression "A == 0x800" using the Pcap compilerFrontend
+	 * compiler.
 	 */
 	@Test
 	public void testPcapCompilerAEquals0x800() throws CompilerException {
@@ -32,10 +33,10 @@ public class CompilerTest {
 		PcapParser parser = new PcapParser(lexer);
 
 		// Step 3: Parse the expression into AST
-		PcapASTNode ast = parser.parse();
+		ASTNode ast = parser.parse();
 
 		// Define the expected AST
-		PcapASTNode expectedAst = new ProtocolNode("ip");
+		ASTNode expectedAst = new ProtocolNode("ip");
 
 //		// Step 4: Verify the AST structure
 		assertEquals(expectedAst, ast, "The AST should match the expected structure for 'A == 0x800'.");

@@ -1,15 +1,17 @@
-package com.slytechs.jnet.jnetruntime.bpf.compiler.dialect.wireshark;
+package com.slytechs.jnet.jnetpcap.bpf.compiler.dialect.wireshark;
+
+import com.slytechs.jnet.compiler.frontend.ASTNode;
 
 /**
  * Represents a logical expression node in the Wireshark AST.
  */
-public class LogicalExpressionNode extends WiresharkASTNode {
+public class LogicalExpressionNode extends ASTNode {
 
     private final String operator;
-    private final WiresharkASTNode left;
-    private final WiresharkASTNode right;
+    private final ASTNode left;
+    private final ASTNode right;
 
-    public LogicalExpressionNode(String operator, WiresharkASTNode left, WiresharkASTNode right) {
+    public LogicalExpressionNode(String operator, ASTNode left, ASTNode right) {
         this.operator = operator;
         this.left = left;
         this.right = right;
@@ -19,11 +21,11 @@ public class LogicalExpressionNode extends WiresharkASTNode {
         return operator;
     }
 
-    public WiresharkASTNode getLeft() {
+    public ASTNode getLeft() {
         return left;
     }
 
-    public WiresharkASTNode getRight() {
+    public ASTNode getRight() {
         return right;
     }
 }
