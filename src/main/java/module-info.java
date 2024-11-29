@@ -27,7 +27,7 @@ import com.slytechs.jnet.compiler.dialect.dialect.wireshark.WiresharkFrontend;
 /**
  * BPF compiler module providing multiple filter dialect implementations. This
  * module implements a compiler framework for Berkeley Packet Filter (BPF)
- * programs with support for multiple front-end dialects and back-end code
+ * programs with settingsSupport for multiple front-end dialects and back-end code
  * generation.
  * 
  * <p>
@@ -63,7 +63,7 @@ import com.slytechs.jnet.compiler.dialect.dialect.wireshark.WiresharkFrontend;
  * <li>com.slytechs.jnet.jnetruntime.jnpl.vm - BPF virtual machine
  * implementation</li>
  * <li>com.slytechs.jnet.compiler - Core compiler framework</li>
- * <li>com.slytechs.jnet.jnetruntime - Runtime support libraries</li>
+ * <li>com.slytechs.jnet.jnetruntime - Runtime settingsSupport libraries</li>
  * </ul>
  * </p>
  * 
