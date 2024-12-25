@@ -3,7 +3,7 @@ package com.slytechs.jnet.compiler.dialect.dialect.pcap;
 import com.slytechs.jnet.compiler.core.AbstractCompiler;
 import com.slytechs.jnet.compiler.core.CompilerOptions;
 import com.slytechs.jnet.compiler.dialect.ir.BpfIR;
-import com.slytechs.jnet.jnetruntime.jnpl.vm.core.BpfProgram;
+import com.slytechs.jnet.platform.jnpl.vm.core.BpfProgram;
 
 public class PcapCompiler extends AbstractCompiler<BpfIR, BpfProgram> {
 

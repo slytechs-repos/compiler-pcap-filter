@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.slytechs.jnet.compiler.CompilerException;
-import com.slytechs.jnet.jnetruntime.jnpl.vm.core.BpfInstruction;
-import com.slytechs.jnet.jnetruntime.jnpl.vm.instruction.BpfOpcode;
+import com.slytechs.jnet.platform.jnpl.vm.core.BpfInstruction;
+import com.slytechs.jnet.platform.jnpl.vm.instruction.BpfOpcode;
 
 /**
  * Constructs and manipulates the intermediate representation.

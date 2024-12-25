@@ -13,9 +13,9 @@ import com.slytechs.jnet.compiler.dialect.ir.BpfIR;
 import com.slytechs.jnet.compiler.dialect.ir.IRBuilder;
 import com.slytechs.jnet.compiler.frontend.ASTNode;
 import com.slytechs.jnet.compiler.frontend.Lexer;
-import com.slytechs.jnet.jnetruntime.jnpl.vm.core.BpfInstruction;
-import com.slytechs.jnet.jnetruntime.jnpl.vm.core.BpfProgram;
-import com.slytechs.jnet.jnetruntime.jnpl.vm.instruction.BpfOpcode;
+import com.slytechs.jnet.platform.jnpl.vm.core.BpfInstruction;
+import com.slytechs.jnet.platform.jnpl.vm.core.BpfProgram;
+import com.slytechs.jnet.platform.jnpl.vm.instruction.BpfOpcode;
 
 public class WiresharkCompiler extends AbstractCompiler<BpfIR, BpfProgram> {
 

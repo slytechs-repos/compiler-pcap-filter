@@ -21,7 +21,7 @@ import java.util.List;
 
 import com.slytechs.jnet.compiler.CompilerException;
 import com.slytechs.jnet.compiler.ir.IRNode;
-import com.slytechs.jnet.jnetruntime.jnpl.vm.core.BpfInstruction;
+import com.slytechs.jnet.platform.jnpl.vm.core.BpfInstruction;
 
 /**
  * Represents the intermediate representation operations.

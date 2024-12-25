@@ -60,10 +60,10 @@ import com.slytechs.jnet.compiler.dialect.dialect.wireshark.WiresharkFrontend;
  * <p>
  * Required modules:
  * <ul>
- * <li>com.slytechs.jnet.jnetruntime.jnpl.vm - BPF virtual machine
+ * <li>com.slytechs.jnet.platform.jnpl.vm - BPF virtual machine
  * implementation</li>
  * <li>com.slytechs.jnet.compiler - Core compiler framework</li>
- * <li>com.slytechs.jnet.jnetruntime - Runtime settingsSupport libraries</li>
+ * <li>com.slytechs.jnet.platform - Runtime settingsSupport libraries</li>
  * </ul>
  * </p>
  * 
@@ -84,9 +84,9 @@ module com.slytechs.jnet.compiler.dialect.pcap {
 	exports com.slytechs.jnet.compiler.dialect.dialect.ntpl;
 	exports com.slytechs.jnet.compiler.dialect.ir;
 
-	requires transitive com.slytechs.jnet.jnetruntime.jnpl.vm;
+	requires transitive com.slytechs.jnet.platform.api;
+	requires transitive com.slytechs.jnet.platform.jnpl;
 	requires transitive com.slytechs.jnet.compiler;
-	requires transitive com.slytechs.jnet.jnetruntime;
 
 	/**
 	 * Provides the BPF backend implementation for code generation.
